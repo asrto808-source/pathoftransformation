@@ -233,7 +233,10 @@
       align-items:flex-start;gap:0;background:var(--bg2);border-bottom:1px solid var(--hairline);
       padding:.4rem 22px 1rem;display:none}
     .nav-links.open{display:flex}
-    .nav-links a{width:100%;padding:.85rem 0;border-bottom:1px solid var(--hairline);font-size:1rem}
+    .nav-links{box-shadow:0 18px 40px rgba(0,0,0,.45);border-radius:0 0 12px 12px}
+    .nav-links a{width:100%;padding:.95rem .2rem;border-bottom:1px solid var(--hairline);
+      font-size:1.02rem;color:var(--ink);display:flex;align-items:center;justify-content:space-between}
+    .nav-links a::after{content:"→";color:var(--accent);opacity:.55;font-size:.9rem}
     .nav-links a:last-child{border-bottom:0}
     .nav-actions{margin-left:auto}
     .nav-toggle{display:block}
@@ -626,7 +629,7 @@
     <article class="rcard">
       <span class="rtag">если всё стоит</span>
       <h3>Запуск <span class="qt">«Как встать на свои ноги»</span></h3>
-      <p class="rhook">С вами всё нормально. Просто ничего не включено.</p>
+      <p class="rhook">С вами всё нормально. Просто механизм ещё не включён — а включается он в понятном порядке.</p>
       <p class="def">Для человека, у которого всё стоит. Своих денег нет или почти нет, и каждый шаг упирается в чужое решение. Или: начинаю и бросаю, силы не доходят до дела, «я уже забыл, чего хотел». Это не мало мотивации и не лень — не запущен механизм. Вопрос здесь один и очень конкретный: что именно у вас не включено и в каком порядке это включают.</p>
       <details>
         <summary>Что внутри разбора <span class="plus">+</span></summary>
@@ -714,9 +717,9 @@
       <li><b>Если нужна дата, когда всё наладится.</b> Её здесь нет. Есть характер вашего времени и понимание, где приложить усилие.</li>
       <li><b>Если хочется, чтобы решение принесли готовым.</b> Показывается конструкция и стратегия — нажимать придётся вам. Зато это будут ваши кнопки.</li>
       <li><b>Если нужно разрешение на решение, которое уже принято.</b> Я назову механику и цену. Подтверждать задним числом не буду.</li>
-      <li><b>Если решения не переходят в действия.</b> Самый честный пункт: разбор будет верным и бесполезным. В этом случае я скажу, с чего начинать вместо него.</li>
+      <li><b>Если сейчас нет сил на движение.</b> Разбор будет точным, но так и останется лежать — а вам нужен не текст, а сдвиг. В этом случае я скажу, с чего начать вместо него, даже если это не в мою пользу.</li>
     </ul>
-    <p class="apex">Я скажу об этом до оплаты, а не после.</p>
+    <p class="apex">Я скажу об этом до оплаты, а не после. И если сюда вам не надо — скажу, куда надо.</p>
   </div>
 </section>
 
@@ -828,6 +831,7 @@
     <details><summary>А если разбор нужен ребёнку или подростку? <span class="plus">+</span></summary><div class="answer">Это отдельные работы. <a href="#products" style="color:var(--accent)">«Мать и дитя»</a> — про ребёнка любого возраста и про вашу с ним связку. Подростковая линза — про выбор пути: поступление, первая работа, реальные варианты, которые он уже рассматривает. За спиной у ребёнка я не разбираю.</div></details>
     <details><summary>А если мне это не подойдёт? <span class="plus">+</span></summary><div class="answer">Скажу об этом до оплаты, а не после. Есть запросы, с которыми сюда не надо, — они <a href="#faq" style="color:var(--accent)">названы выше открыто</a>. И если я вижу, что сначала нужна другая работа, я назову какую, даже если это не моя.</div></details>
     <details><summary>Это конфиденциально? <span class="plus">+</span></summary><div class="answer">Полностью. Всё, что вы доверяете в разборе, остаётся между нами.</div></details>
+    <p class="contact" style="margin-top:2rem">Не нашли свой вопрос — <a href="https://vk.ru/topic-239613388_68147030">полная версия ответов в сообществе →</a> или просто напишите мне.</p>
   </div>
 </section>
 
@@ -902,12 +906,17 @@
       a.addEventListener("click",function(){links.classList.remove("open");toggle.setAttribute("aria-expanded","false");});
     });
   }
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});
-  },{threshold:0.12});
-  document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
+  var revealAll=function(){
+    document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("in");});
+  };
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});
+    },{threshold:0,rootMargin:"0px 0px -8% 0px"});
+    document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
+    setTimeout(revealAll,2500);
+  }else{ revealAll(); }
 })();
 </script>
 </body>
-</html><p class="contact" style="margin-bottom:2rem">Не нашли свой вопрос — <a href="https://vk.ru/topic-239613388_68147030">полная версия ответов в сообществе →</a> или просто напишите мне.</p>
-    
+</html>
